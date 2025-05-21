@@ -1,0 +1,464 @@
+/* styles.css */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+}
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* This makes the entire page scroll if content exceeds viewport */
+}
+
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1em 0;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.board-management {
+    background-color: #e6f2ff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #b3d9ff;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.board-management input[type="text"],
+.board-management select,
+.board-management button {
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 0.95em;
+}
+
+.board-management button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+.board-management button:hover {
+    background-color: #0056b3;
+}
+.board-management #deleteBoardBtn {
+    background-color: #dc3545;
+}
+.board-management #deleteBoardBtn:hover {
+    background-color: #c82333;
+}
+
+.board-management hr {
+    margin: 15px auto;
+    border: 0;
+    border-top: 1px solid #ccc;
+    width: 80%;
+}
+
+#currentBoardNameDisplay {
+    margin-top: 10px;
+    font-style: italic;
+    color: #333;
+    font-weight: bold;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #e9e9e9;
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.file-upload-area, .add-block-area {
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#uploadedFilesList ul {
+    list-style-type: none;
+    padding: 0;
+}
+#uploadedFilesList li {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+
+#bulletinBoard {
+    display: block;
+    position: relative;
+    min-height: 800px; /* Base min-height */
+    height: auto; /* Allow height to adjust */
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: visible; /* Blocks can temporarily go beyond its bounds, controlled by JS sizing */
+    flex-grow: 1;
+}
+
+.block {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    
+    position: absolute;
+}
+
+.text-block {
+    width: 380px;
+    max-width: 800px;
+    min-width: 250px;
+    height: 250px;
+    min-height: 150px;
+    resize: both;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.text-block textarea {
+    width: 100%;
+    height: 100%;
+    min-height: 80px;
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    resize: none;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-grow: 1;
+}
+.text-block textarea:not([readonly]) {
+    font-family: monospace;
+    font-size: 13px;
+}
+
+/* MODIFIED: Dragging usability for header (user-select: none) */
+.block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    cursor: grab;
+    user-select: none; /* Prevent text selection during drag */
+    -webkit-user-select: none; /* For Safari */
+    -moz-user-select: none; /* For Firefox */
+    -ms-user-select: none; /* For IE10+/Edge */
+}
+.block-header:active {
+    cursor: grabbing;
+}
+
+/* Basic styling for rendered Markdown elements within the textarea (keep as is) */
+.text-block textarea h1,
+.text-block textarea h2,
+.text-block textarea h3,
+.text-block textarea h4,
+.text-block textarea h5,
+.text-block textarea h6 {
+    margin-top: 0.8em;
+    margin-bottom: 0.4em;
+    line-height: 1.2;
+    color: #222;
+}
+.text-block textarea h1 { font-size: 1.8em; border-bottom: 1px solid #eee; padding-bottom: 0.2em;}
+.text-block textarea h2 { font-size: 1.5em; }
+.text-block textarea h3 { font-size: 1.3em; }
+.text-block textarea p { margin-bottom: 0.8em; line-height: 1.5; }
+.text-block textarea ul,
+.text-block textarea ol {
+    margin-left: 25px;
+    margin-bottom: 0.8em;
+    list-style-type: disc;
+}
+.text-block textarea ol {
+    list-style-type: decimal;
+}
+.text-block textarea li { margin-bottom: 0.2em; }
+.text-block textarea pre {
+    background-color: #eee;
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+.text-block textarea code {
+    font-family: monospace;
+    background-color: #f0f0f0;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+.text-block textarea blockquote {
+    border-left: 4px solid #b3d9ff;
+    padding-left: 15px;
+    margin-left: 0;
+    color: #666;
+    font-style: italic;
+}
+.text-block textarea a {
+    color: #007bff;
+    text-decoration: none;
+}
+.text-block textarea a:hover {
+    text-decoration: underline;
+}
+
+
+.plot-block {
+    width: 650px;
+    min-width: 400px;
+    height: 550px;
+    min-height: 450px;
+    box-sizing: border-box;
+    position: absolute;
+    resize: both;
+    overflow: hidden;
+}
+
+.plot-block .resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    background: transparent;
+    cursor: nwse-resize;
+    z-index: 1;
+    border-bottom: 3px solid #666;
+    border-right: 3px solid #666;
+    border-bottom-right-radius: 4px;
+}
+
+.block-header h4[contenteditable="true"] {
+    outline: 1px dashed #007bff;
+    background-color: #e6f2ff;
+    padding: 2px 5px;
+    border-radius: 3px;
+    min-width: 50px;
+}
+.block-header h4 {
+    margin: 0;
+    flex-grow: 1;
+    padding-right: 10px;
+}
+
+.block-header .header-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.block-header .header-controls button {
+    padding: 4px 8px;
+    font-size: 0.8em;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.block-header .header-controls button:hover {
+    background-color: #5a6268;
+}
+.block-header .header-controls .compile-markdown-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+.block-header .header-controls .compile-markdown-btn:hover {
+    background-color: #45a049;
+}
+.block-header .header-controls .edit-markdown-btn {
+    background-color: #008CBA;
+    color: white;
+}
+.block-header .header-controls .edit-markdown-btn:hover {
+    background-color: #007bb5;
+}
+
+
+.remove-btn {
+    background-color: #ff6b6b;
+}
+.remove-btn:hover {
+    background-color: #e05252;
+}
+
+.plot-controls.hidden {
+    display: none;
+}
+
+.plot-controls {
+    font-size: 0.9em;
+    padding-bottom: 10px;
+    flex-shrink: 0;
+    max-height: calc(100% - 60px); /* Approx. 60px for header. Allows plot controls to scroll within block */
+    overflow-y: auto;
+    padding-right: 15px;
+    box-sizing: border-box;
+}
+
+.plot-container {
+    width: 100%;
+    flex-grow: 1;
+    min-height: 0;
+    margin-top: 15px;
+    background-color: transparent;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.plot-controls section {
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.plot-controls h4 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #444;
+    font-size: 1.1em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 3px;
+}
+.plot-controls h5 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 0.95em;
+    color: #555;
+}
+
+.plot-controls select,
+.plot-controls input[type="text"],
+.plot-controls input[type="color"],
+.plot-controls input[type="number"],
+.plot-controls button,
+.plot-controls input[type="checkbox"] {
+    margin-right: 8px;
+    margin-bottom: 8px;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    vertical-align: middle;
+}
+.plot-controls input[type="color"] {
+    padding: 2px;
+    width: 50px;
+    height: 32px;
+}
+.plot-controls input[type="number"] {
+    width: 70px;
+}
+.plot-controls label {
+    margin-right: 5px;
+}
+.plot-controls input[type="checkbox"] {
+    height: 20px;
+    width: 20px;
+    margin-left: 5px;
+    vertical-align: middle;
+    padding: 0;
+    border-radius: 3px;
+}
+
+
+/* Trace List Styling */
+.plot-controls ul {
+    list-style-type: none;
+    padding-left: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    padding: 8px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+.plot-controls li {
+    font-size: 0.95em;
+    padding: 4px 6px;
+    border-bottom: 1px dashed #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.plot-controls li:last-child {
+    border-bottom: none;
+}
+.plot-controls li .trace-remove-btn {
+    font-size: 0.8em;
+    padding: 2px 5px;
+    background-color: #ffac6b;
+    border: 1px solid #ff8282;
+    cursor: pointer;
+}
+.plot-controls li .trace-remove-btn:hover {
+    background-color: #e05252;
+}
+.plot-controls li .trace-order-btn {
+    font-size: 0.8em;
+    padding: 2px 5px;
+    background-color: #add8e6;
+    border: 1px solid #87ceeb;
+    cursor: pointer;
+    margin-left: 5px;
+}
+.plot-controls li .trace-order-btn:hover {
+    background-color: #87ceeb;
+}
+
+.plot-controls li.editing-trace {
+    background-color: #e0f2f7;
+    font-weight: bold;
+    border: 1px solid #b3e0ed;
+}
+
+/* Action Buttons */
+.action-buttons button {
+    margin-top: 10px;
+    background-color: #28a745;
+    color: white;
+}
+.action-buttons button:hover {
+    background-color: #218838;
+}
+
+/* Toastify-JS customizations (optional) */
+.toastify {
+    border-radius: 5px !important;
+    font-size: 0.95em !important;
+}
+.toastify.toastify-right {
+    right: 20px !important;
+}
