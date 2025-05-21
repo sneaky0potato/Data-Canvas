@@ -68,7 +68,7 @@ A straightforward, browser-based tool for organizing and visualizing data insigh
 
 ## 📄 License
 
-MIT
+MIT License
 
 ---
 
