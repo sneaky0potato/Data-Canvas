@@ -73,6 +73,5 @@ MIT License
 ---
 
 ## 👤 Author
-
-Google-Gemini and Me
+Built with CODEX
 
